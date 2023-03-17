@@ -17,10 +17,7 @@ for (let i = 0; i < m; i++) {
 var cp1;
 var cp2;
 const bote=[];
-cp1=b1[0].slice(0,-1);
-cp2=b2[0].slice(0,-1);
-console.error(b1,b2);
-console.error(cp1,cp2);
+
 
 function mayor(cp1,cp2){//completo, evalua cp1y2, devuelve 0 1 2, usar converse
     if (cp1==cp2){//guerra
@@ -91,11 +88,12 @@ function mayor(cp1,cp2){//completo, evalua cp1y2, devuelve 0 1 2, usar converse
     }
 
 }
-function conversion(1,2){//este es el que se usa, lleva mayor incluido
-    switch(mayor(1,2)){
+function conversion(c1,c2){//este es el que se usa, lleva mayor incluido
+    switch(mayor(c1,c2)){
         case 0://guerra
-        if(b1.length)
+        //if(b1.length)
         war();
+        break;
 
        // cases.
         //convers again
@@ -103,9 +101,11 @@ function conversion(1,2){//este es el que se usa, lleva mayor incluido
 
         case 1://gana p1
         fight(b1);
+        break;
 
         case 2://ganap2
         fight(b2);
+        break;
 
         default:
             console.error("fallo");
@@ -118,27 +118,31 @@ function fight(ganador){//b1 o b2 dentro, lleva console detras
     R++;
     console.error(b1.length,b2.length,R);
 }
-function boteadd(ganador){// roba 3 de cada mazo y los mete al bote
+function boteadd(){// roba 3 de cada mazo y los mete al bote
     for (let i = 0; i <= 4; i++) {
-        ganador.push(b1.shift()); 
+        bote.push(b1.shift()); 
     }
     for (let i = 0; i <= 4; i++) {
-        ganador.push(b2.shift());
-}}
+        bote.push(b2.shift());
+}
+console.error(b1,b2);
+}
 function botew(ganador){//añade el bote al ganador
     ganador.push(bote);
     R++;
+    bote=[];
     console.error(b1.length,b2.length,R);
 }
 function war(){//guerra, completo
     if(b1.length<=3||b2.length<=3){
         W='PAT';
+        
     }
-   
-    boteadd();
-    
     cp1=b1[4].slice(0,-1);
     cp2=b2[4].slice(0,-1);
+    boteadd();
+    
+    
 
 
     if (cp1==cp2){//guerra
@@ -211,8 +215,30 @@ function war(){//guerra, completo
     //si 4 omenos cartas pat
     //si 5 ver si pierde  
     console.error('fin  war',b1.length,b2.length,R);
-    }
+}
     
+
+
+
+while (b1.length!=0 && b2.length!=0) {
+
+    console.error('inicio while');
+    cp1=b1[0].slice(0,-1);
+    cp2=b2[0].slice(0,-1);
+    console.error(b1,b2);
+    console.error(cp1,cp2);
+    
+
+    conversion(cp1,cp2);
+
+    if (b2.length==0){
+        W=1;
+    }else{
+        W=2;
+    }
+    console.error('fin while');
+
+}   
 
 /*
 while (b1.length!=0 && b2.length!=0) {
@@ -288,11 +314,7 @@ else if(cp1=='J'||cp1=='Q'||cp1=='K'||cp1=='A'||cp2=='J'||cp2=='Q'||cp2=='K'||cp
 console.error('fin while',b1.length,b2.length,R);
 }//fin while
 
-if (b2.length==0){
-    W=1;
-}else{
-    W=2;
-}
+
 //If a player runs out of cards during a "war" 
 //(when giving up the three cards or when doing the battle),
 // then the game ends and both players are placed equally first.
